@@ -61,31 +61,31 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .mouse-tracker {
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 
-.coordinates {
-  display: flex;
-  gap: 2rem;
-}
+    .coordinates {
+        display: flex;
+        gap: 2rem;
+    }
 
-.hint {
-  margin-top: 2rem;
-  opacity: 0.7;
-}
+    .hint {
+        margin-top: 2rem;
+        opacity: 0.7;
+    }
 
-.open-tab-link {
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-}
+    .open-tab-link {
+        cursor: pointer;
+        transition: opacity 0.2s ease;
 
-.open-tab-link:hover {
-  opacity: 0.7;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
 }
 </style>

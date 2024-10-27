@@ -2,7 +2,7 @@
     <component
         :is="computedTag"
         :class="classes"
-        :style="{ color }"
+        :style="computedStyle"
     >
         <slot />
     </component>
@@ -19,7 +19,7 @@ interface Props {
     color?: string;
     inline?: boolean;
     block?: boolean;
-    lineClamp?: 1 | 2 | 3 | 4 | 5 | 6;
+    lineClamp?: number;
     textAlign?: 'left' | 'right' | 'justify' | 'center';
     capitalize?: boolean;
     lineHeight?: 'tight' | 'normal' | 'relaxed' | 'loose';
@@ -39,7 +39,7 @@ const defaultProps = withDefaults(defineProps<Props>(), {
     href: undefined,
 });
 
-const classes = [
+const classes = computed(() => [
     defaultProps.tag && `font-${defaultProps.tag}`,
     defaultProps.size && `text-${defaultProps.size}`,
     defaultProps.weight && `font-${defaultProps.weight}`,
@@ -48,127 +48,94 @@ const classes = [
     defaultProps.inline && 'inline',
     defaultProps.block && 'block',
     defaultProps.textAlign && `text-${defaultProps.textAlign}`,
-    defaultProps.lineClamp && `line-clamp-${defaultProps.lineClamp}`,
+    defaultProps.lineClamp && 'line-clamp',
     defaultProps.capitalize && 'capitalize',
     defaultProps.lineHeight && `line-height-${defaultProps.lineHeight}`,
-];
+]);
 
 const computedTag = computed(() => {
     if (defaultProps.tag === 'a' && !defaultProps.href) {
-        console.warn('Href attribute is required for anchor tags');
+        console.warn('Href обязательный атрибут для ссылок');
     }
     return defaultProps.tag;
 });
+
+const computedStyle = computed(() => ({
+    color: defaultProps.color,
+    ...(defaultProps.lineClamp && {
+        '-webkit-line-clamp': defaultProps.lineClamp,
+    }),
+}));
 </script>
 
-<style scoped>
-/* Font sizes */
-.text-xxl { font-size: 32px; }
-.text-xl { font-size: 24px; }
-.text-l { font-size: 20px; }
-.text-m { font-size: 16px; }
-.text-s { font-size: 14px; }
-.text-xs { font-size: 12px; }
+<style lang="scss" scoped>
+$font-sizes: (
+    'xxl': 32px,
+    'xl': 24px,
+    'l': 20px,
+    'm': 16px,
+    's': 14px,
+    'xs': 12px
+);
 
-/* Font weights */
-.font-500 { font-weight: 500; }
-.font-600 { font-weight: 600; }
-.font-400 { font-weight: 400; }
-.font-700 { font-weight: 700; }
+$font-weights: (
+    '400': 400,
+    '500': 500,
+    '600': 600,
+    '700': 700
+);
 
-/* Line heights */
-.line-height-tight { line-height: 1.25; }
-.line-height-normal { line-height: 1.5; }
-.line-height-relaxed { line-height: 1.75; }
-.line-height-loose { line-height: 2; }
+$line-heights: (
+    'tight': 1.25,
+    'normal': 1.5,
+    'relaxed': 1.75,
+    'loose': 2
+);
 
-/* Text alignment */
-.text-left { text-align: left; }
-.text-right { text-align: right; }
-.text-justify { text-align: justify; }
-.text-center { text-align: center; }
+@each $size, $value in $font-sizes {
+    .text-#{$size} {
+        font-size: $value;
+    }
+}
 
-/* Line clamp */
-.line-clamp-1 {
+@each $weight, $value in $font-weights {
+    .font-#{$weight} {
+        font-weight: $value;
+    }
+}
+
+@each $height, $value in $line-heights {
+    .line-height-#{$height} {
+        line-height: $value;
+    }
+}
+
+.text {
+    &-left { text-align: left; }
+    &-right { text-align: right; }
+    &-justify { text-align: justify; }
+    &-center { text-align: center; }
+    &-link { text-decoration: underline; }
+}
+
+.line-clamp {
     display: -webkit-box;
-    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     white-space: pre-wrap;
 }
 
-.line-clamp-2 {
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: pre-wrap;
+.text-decoration {
+    &-line-through { text-decoration: line-through; }
+    &-underline { text-decoration: underline; }
+    &-none { text-decoration: none; }
 }
 
-.line-clamp-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: pre-wrap;
-}
+.inline { display: inline; }
+.block { display: block; }
 
-.line-clamp-4 {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: pre-wrap;
-}
+.capitalize { text-transform: capitalize; }
 
-.line-clamp-5 {
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: pre-wrap;
-}
-
-.line-clamp-6 {
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    white-space: pre-wrap;
-}
-
-/* Text decorations */
-.text-link {
-    text-decoration: underline;
-}
-
-.text-decoration-line-through {
-    text-decoration: line-through;
-}
-
-.text-decoration-underline {
-    text-decoration: underline;
-}
-
-.text-decoration-none {
-    text-decoration: none;
-}
-
-/* Display */
-.inline {
-    display: inline;
-}
-
-.block {
-    display: block;
-}
-
-/* Text transform */
-.capitalize {
-    text-transform: capitalize;
-}
-
-/* Default styles for elements */
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
