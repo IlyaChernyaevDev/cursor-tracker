@@ -1,75 +1,31 @@
-# Nuxt Minimal Starter
+# Mouse Tracker
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Требования
 
-## Setup
+-   [Node.JS](https://nodejs.org) - >= 22.0.0
+-   [Pnpm](https://www.npmjs.com/) - >= 10.5.1
 
-Make sure to install dependencies:
+## Установка
+
+### Для начала работы необходимо клонировать репозиторий:
 
 ```bash
-# npm
+git clone git@github.com:IlyaChernyaevDev/cursor-tracker.git
+# or
+git clone git@github.com:IlyaChernyaevDev/cursor-tracker.git REPO_NAME
+```
+
+### Установить все зависимости:
+
+```bash
+cd ./REPO_NAME
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
+---
 
-Start the development server on `http://localhost:3000`:
+### Запуск для разработки (development mode):
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
