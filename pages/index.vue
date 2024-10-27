@@ -1,11 +1,10 @@
 <template>
-  <ClientOnly>
-    <BaseMouseTracker />
-  </ClientOnly>
+    <ClientOnly>
+        <BaseMouseTracker />
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">
-
 useHeadSafe({
     title: 'Mouse Tracker',
 });
