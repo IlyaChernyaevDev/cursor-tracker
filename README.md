@@ -1,5 +1,7 @@
 # Mouse Tracker
 
+[Демо приложения](https://ilyachernyaevdev.github.io/cursor-tracker/)
+
 ## Требования
 
 -   [Node.JS](https://nodejs.org) - >= 22.0.0
