@@ -3,7 +3,7 @@ export default defineNuxtConfig({
     modules: ['@nuxt/eslint'],
     devtools: { enabled: true },
     app: {
-        baseURL: '/cursor-tracker/',
+        baseURL: '',
     },
     compatibilityDate: '2024-04-03',
     eslint: {
