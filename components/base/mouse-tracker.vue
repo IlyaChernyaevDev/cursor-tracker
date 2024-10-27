@@ -36,7 +36,6 @@
             class="open-tab-link"
             href="/"
             @click.prevent="openNewTab"
-            @touchend="openNewTab"
         >
             Открыть в новой вкладке для проверки синхронизации
         </BaseTypo>
