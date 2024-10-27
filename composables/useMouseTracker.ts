@@ -1,6 +1,7 @@
 interface MouseCoordinates {
     x: number;
     y: number;
+    sourceType: 'mouse' | 'touch' | null;
 }
 
 const STORAGE_KEY = 'last-mouse-coordinates';
@@ -13,7 +14,7 @@ export const useMouseTracker = () => {
             return JSON.parse(stored);
         }
 
-        return { x: 0, y: 0 };
+        return { x: 0, y: 0, sourceType: null };
     };
 
     const coordinates = ref<MouseCoordinates>(getInitialCoordinates());
@@ -32,28 +33,50 @@ export const useMouseTracker = () => {
         const newCoordinates: MouseCoordinates = {
             x: event.clientX,
             y: event.clientY,
+            sourceType: 'mouse',
         };
 
-        coordinates.value = newCoordinates;
-        broadcastChannel?.postMessage({
-            x: newCoordinates.x,
-            y: newCoordinates.y,
-        });
+        updateCoordinates(newCoordinates);
+    };
 
+    const handleTouchMove = (event: TouchEvent) => {
+        if (event.touches.length > 0) {
+            const touch = event.touches[0];
+            const newCoordinates: MouseCoordinates = {
+                x: touch.clientX,
+                y: touch.clientY,
+                sourceType: 'touch',
+            };
+
+            updateCoordinates(newCoordinates);
+        }
+    };
+
+    const updateCoordinates = (newCoordinates: MouseCoordinates) => {
+        coordinates.value = newCoordinates;
+        broadcastChannel?.postMessage(newCoordinates);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(newCoordinates));
     };
 
     const startTracking = () => {
         initBroadcastChannel();
-        window.addEventListener('mousemove', handleMouseMove);
+
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+        window.addEventListener('touchstart', handleTouchMove, { passive: true });
+        window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
         broadcastChannel?.postMessage({
             x: coordinates.value.x,
             y: coordinates.value.y,
+            sourceType: coordinates.value.sourceType,
         });
     };
 
     const stopTracking = () => {
         window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('touchstart', handleTouchMove);
+        window.removeEventListener('touchmove', handleTouchMove);
         broadcastChannel?.close();
         broadcastChannel = null;
     };
