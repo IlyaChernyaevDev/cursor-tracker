@@ -48,9 +48,7 @@ import { useMouseTracker } from '~/composables/useMouseTracker';
 const { coordinates, startTracking, stopTracking } = useMouseTracker();
 
 const openNewTab = () => {
-    if (import.meta.client) {
-        localStorage.setItem('last-mouse-coordinates', JSON.stringify(coordinates.value));
-    }
+    localStorage.setItem('last-mouse-coordinates', JSON.stringify(coordinates.value));
     window.open(window.location.href, '_blank');
 };
 

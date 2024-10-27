@@ -1,7 +1,5 @@
 <template>
-    <ClientOnly>
-        <BaseMouseTracker />
-    </ClientOnly>
+    <BaseMouseTracker />
 </template>
 
 <script setup lang="ts">

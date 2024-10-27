@@ -8,12 +8,11 @@ const CHANNEL_NAME = 'mouse-coordinates';
 
 export const useMouseTracker = () => {
     const getInitialCoordinates = (): MouseCoordinates => {
-        if (import.meta.client) {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                return JSON.parse(stored);
-            }
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            return JSON.parse(stored);
         }
+
         return { x: 0, y: 0 };
     };
 
@@ -25,9 +24,7 @@ export const useMouseTracker = () => {
 
         broadcastChannel.onmessage = (event: MessageEvent<MouseCoordinates>) => {
             coordinates.value = event.data;
-            if (import.meta.client) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(event.data));
-            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(event.data));
         };
     };
 
@@ -43,9 +40,7 @@ export const useMouseTracker = () => {
             y: newCoordinates.y,
         });
 
-        if (import.meta.client) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(newCoordinates));
-        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newCoordinates));
     };
 
     const startTracking = () => {
