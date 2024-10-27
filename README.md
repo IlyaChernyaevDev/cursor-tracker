@@ -1,11 +1,11 @@
-# Mouse Tracker
+# Cursor tracker
 
 [Демо приложения](https://ilyachernyaevdev.github.io/cursor-tracker/)
 
 ## Требования
 
 -   [Node.JS](https://nodejs.org) - >= 22.0.0
--   [Pnpm](https://www.npmjs.com/) - >= 10.5.1
+-   [Npm](https://www.npmjs.com/) - >= 10.5.1
 
 ## Установка
 
