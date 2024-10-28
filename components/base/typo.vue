@@ -26,7 +26,7 @@ interface Props {
     href?: string;
 }
 
-const defaultProps = withDefaults(defineProps<Props>(), {
+const { tag, size, weight, decoration, color, inline, block, lineClamp, textAlign, capitalize, lineHeight, href } = withDefaults(defineProps<Props>(), {
     tag: 'p',
     size: 'm',
     weight: '400',
@@ -40,30 +40,30 @@ const defaultProps = withDefaults(defineProps<Props>(), {
 });
 
 const classes = computed(() => [
-    defaultProps.tag && `font-${defaultProps.tag}`,
-    defaultProps.size && `text-${defaultProps.size}`,
-    defaultProps.weight && `font-${defaultProps.weight}`,
-    defaultProps.tag === 'a' && 'text-link',
-    defaultProps.decoration && `text-decoration-${defaultProps.decoration}`,
-    defaultProps.inline && 'inline',
-    defaultProps.block && 'block',
-    defaultProps.textAlign && `text-${defaultProps.textAlign}`,
-    defaultProps.lineClamp && 'line-clamp',
-    defaultProps.capitalize && 'capitalize',
-    defaultProps.lineHeight && `line-height-${defaultProps.lineHeight}`,
+    tag && `font-${tag}`,
+    size && `text-${size}`,
+    weight && `font-${weight}`,
+    tag === 'a' && 'text-link',
+    decoration && `text-decoration-${decoration}`,
+    inline && 'inline',
+    block && 'block',
+    textAlign && `text-${textAlign}`,
+    lineClamp && 'line-clamp',
+    capitalize && 'capitalize',
+    lineHeight && `line-height-${lineHeight}`,
 ]);
 
 const computedTag = computed(() => {
-    if (defaultProps.tag === 'a' && !defaultProps.href) {
+    if (tag === 'a' && !href) {
         console.warn('Href обязательный атрибут для ссылок');
     }
-    return defaultProps.tag;
+    return tag;
 });
 
 const computedStyle = computed(() => ({
-    color: defaultProps.color,
-    ...(defaultProps.lineClamp && {
-        '-webkit-line-clamp': defaultProps.lineClamp,
+    color,
+    ...(lineClamp && {
+        '-webkit-line-clamp': lineClamp,
     }),
 }));
 </script>
